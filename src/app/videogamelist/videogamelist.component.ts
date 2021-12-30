@@ -27,6 +27,12 @@ export class VideogamelistComponent implements OnInit, OnDestroy {
     //this.id="";
   }
   ngAfterViewInit(): void {
+    
+    this.loadVideogameList();
+    
+  }
+  loadVideogameList()
+  {
     this.service.getVideogameList().subscribe((data) => {
       this.videogames = data as any;
       console.log(this.videogames);
@@ -36,13 +42,18 @@ export class VideogamelistComponent implements OnInit, OnDestroy {
     ()=>{
       alert("Internal Server Error.There was an error retrieving your request. Please contact support");
     });
-    
-    
   }
   editbuttonclicked(data:any)
   {
     if (data!=undefined && data!=null) {
       this.router.navigate(["/videogame-edit",data]);
+    }
+  }
+  deletebuttonclicked(data:any)
+  {
+    if (data!=undefined && data!=null) {
+      this.service.deleteVideogame(data);
+      window.location.reload();
     }
   }
 

@@ -13,7 +13,8 @@
             <th>Platform</th>
             <th>Genere</th>
             <th>Company Name</th>
-            <th>Action</th>
+            <th></th>
+            <th></th>
         </tr>
     </thead>  
     <tbody>
@@ -23,7 +24,8 @@
           <td>{{ videogame.platform }}</td>
           <td>{{ videogame.genere }}</td>
           <td>{{ videogame.company.name }}</td>  
-          <td><button render="renderer" id="editbutton" (click)="editbuttonclicked(videogame.id)" class="btn btn-primary">Edit</button></td>       
+          <td><button render="renderer" id="editbutton" (click)="editbuttonclicked(videogame.id)" class="btn btn-primary">Edit</button></td>  
+          <td><button render="renderer" id="editbutton" (click)="deletebuttonclicked(videogame.id)" class="btn btn-primary">Delete</button></td>            
         </tr>
       </tbody>  
 </table>

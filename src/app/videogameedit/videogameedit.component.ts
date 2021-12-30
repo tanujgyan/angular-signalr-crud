@@ -36,16 +36,14 @@ export class VideogameeditComponent implements OnInit {
     this.service.getCompanies().subscribe((res)=>{
       this.companies=res;
     });
-    //if(this.selectedId==undefined)
     this.selectedId = this.route.snapshot.paramMap.get('id')!=undefined?this.route.snapshot.paramMap.get('id'):0;
-    console.log(this.selectedId);
-    if (this.selectedId!=null || this.selectedId!=undefined)
+    
+    if (this.selectedId!=null && this.selectedId!=undefined && this.selectedId!=0)
     {
       this.btnName="Update";
       this.service.getVideogameFromId(this.selectedId).subscribe(
         (res)=>
         {
-          console.log("res "+res.name);
           this.form.setValue({
             id:res.id,
             name:res.name,
@@ -61,15 +59,13 @@ export class VideogameeditComponent implements OnInit {
         }
   }
   submitForm() { 
-    if (this.selectedId!=null || this.selectedId!=undefined)
-    {
-     
+    if (this.selectedId!=null && this.selectedId!=undefined && this.selectedId!=0)
+    { 
       this.videogameModel.id=this.form.value.id;
       this.videogameModel.platform=this.form.value.platform;
       this.videogameModel.genere=this.form.value.genere;
       this.videogameModel.name=this.form.value.name;
-      this.videogameModel.company.name=this.form.value.companyName;
-      
+      this.videogameModel.company.name=this.form.value.companyName;     
       this.service.updateVideogame(this.videogameModel).subscribe(
         () => {
           alert(this.btnName+" successful")
@@ -77,20 +73,23 @@ export class VideogameeditComponent implements OnInit {
         },
         (err) => {
           alert("there was an error in add/update please try again later")
-          console.log(err);
         }
       );
     }
     else
     {
-      this.service.addVideogame(this.form.value).subscribe(
+      this.videogameModel.id=this.form.value.id;
+      this.videogameModel.platform=this.form.value.platform;
+      this.videogameModel.genere=this.form.value.genere;
+      this.videogameModel.name=this.form.value.name;
+      this.videogameModel.company.name=this.form.value.companyName; 
+      this.service.addVideogame(this.videogameModel).subscribe(
         () => {
           alert(this.btnName+" successful")
           this.router.navigate(["/"]);
         },
         (err) => {
           alert("there was an error in add/update please try again later")
-          console.log(err);
         }
       );
     }

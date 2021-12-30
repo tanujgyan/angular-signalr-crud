@@ -6,6 +6,7 @@ import { VideogameeditComponent } from './videogameedit/videogameedit.component'
 const routes: Routes = [
   { path: 'videogame-list', component: VideogamelistComponent },
   { path: 'videogame-edit/:id', component: VideogameeditComponent },
+  { path: 'videogame-edit', component: VideogameeditComponent },
   { path: '',   redirectTo: '/videogame-list', pathMatch: 'full' }
 ];
 

@@ -32,4 +32,9 @@ export class VideogameserviceService {
   {
     return this.http.put(this.baseURL,videogame);
   }
+  //delete wont work without subscribe
+  deleteVideogame(id:string)
+  {
+    return this.http.delete(this.baseURL+"?id="+id).subscribe(()=>{});
+  }
 }
