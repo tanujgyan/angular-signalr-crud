@@ -1,1 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+.formsize
+{
+    width: 50%;
+    height: auto; 
+    margin-top: 5%; 
+    margin-left: 5%;
+    padding-right: 5%;
+}
+.tablesize
+{
+    width: 95%;
+    height: auto; 
+    margin-top: 5%; 
+    margin-left: 5%;
+    padding-right: 5%;
+}
+.button-style
+{
+    display: flex;
+    justify-content: space-evenly;
+    width: 45%;
+   
+}

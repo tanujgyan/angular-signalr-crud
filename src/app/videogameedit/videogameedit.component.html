@@ -1,0 +1,50 @@
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">Upsert Videogames</h1>
+      <p class="lead">This page is used to insert/update video games </p>
+    </div>
+  </div>
+<div class="form-style" class="formsize">
+    <form [formGroup]="form" class="form-width" (ngSubmit)="submitForm()" >
+      <div class="form-group">
+      <label for="name">Videogame Name:</label>
+        <input maxlength="100" required  type="text" formControlName="name" id="name" class="form-control" >
+        <div *ngIf="name?.invalid && (name?.dirty || name?.touched)"
+        class="alert alert-danger">Videogame Name is required</div>
+        
+    </div>
+    <div class="form-group" style="height: 2ch;"></div>
+    <div class="form-group">
+      <label for="platform">
+        Platform: </label>
+        <input type="text" maxlength="50" formControlName="platform" id="platform" class="form-control" >
+        <div *ngIf="platform?.invalid && (platform?.dirty || platform?.touched)"
+        class="alert alert-danger">Platform is required</div>
+    </div>
+    <div class="form-group" style="height: 2ch;"></div>
+    <div class="form-group">
+      <label>
+        Genere:</label>
+        <input type="text" formControlName="genere" class="form-control" maxlength="50" >
+        <div *ngIf="genere?.invalid && (genere?.dirty || genere?.touched)"
+        class="alert alert-danger">Genere is required</div>
+    </div>
+    <div class="form-group" style="height: 2ch;"></div>
+    <div class="form-group">
+    <label>
+        Company Name:</label>
+        <select formControlName="companyName" class="form-select" style="width: 50%;">
+            <option [ngValue]="null">--Select One--</option>
+            <option *ngFor="let company of companies">{{company}}</option>
+        </select>
+        <!-- <input type="text"formControlName ="companyName" class="form-control" maxlength="50"> -->
+        <div *ngIf="companyName?.invalid && (companyName?.dirty || companyName?.touched)"
+        class="alert alert-danger">Company Name is required</div>
+    </div>
+    <div class="form-group" style="height: 2ch;"></div>
+      <div class="button-style">
+      <button #submitButton [disabled]="form.invalid"type="submit" class="btn btn-primary mr-1" id="upsert">{{btnName}}</button>
+      <button  (click)="cancel()"   type="button" class="btn btn-danger" id="cancel">Cancel</button>
+    </div>
+    </form>
+    </div>

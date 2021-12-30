@@ -1,0 +1,30 @@
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">Videogames</h1>
+      <p class="lead">This page lists all available video games </p>
+    </div>
+  </div>
+<div class="tablesize" >
+<table id ="videogameslist" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-striped table-bordered" >
+    <thead class="thead-light">
+        <tr>
+            <th >Id</th>
+            <th>Name</th>
+            <th>Platform</th>
+            <th>Genere</th>
+            <th>Company Name</th>
+            <th>Action</th>
+        </tr>
+    </thead>  
+    <tbody>
+        <tr *ngFor="let videogame of videogames">
+          <td data-visible="false">{{ videogame.id }}</td>
+          <td>{{ videogame.name }}</td>
+          <td>{{ videogame.platform }}</td>
+          <td>{{ videogame.genere }}</td>
+          <td>{{ videogame.company.name }}</td>  
+          <td><button render="renderer" id="editbutton" (click)="editbuttonclicked(videogame.id)" class="btn btn-primary">Edit</button></td>       
+        </tr>
+      </tbody>  
+</table>
+</div>
