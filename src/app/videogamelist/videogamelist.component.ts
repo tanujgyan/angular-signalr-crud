@@ -1,39 +1,49 @@
 import { VideogameModel } from './../VideogameModel';
 import { VideogameserviceService } from './../videogameservice.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Subject, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { DataTableDirective } from 'angular-datatables';
 
 @Component({
   selector: 'app-videogamelist',
   templateUrl: './videogamelist.component.html',
   styleUrls: ['./videogamelist.component.css']
 })
-export class VideogamelistComponent implements OnInit, OnDestroy {
+export class VideogamelistComponent implements OnInit, OnDestroy,AfterViewInit {
 
-  constructor( private service: VideogameserviceService, private router: Router) { }
+  constructor( private service: VideogameserviceService, private router: Router,private http: HttpClient) { }
   dtOptions: DataTables.Settings = {};
   videogames: VideogameModel[] = [];
   dtTrigger: Subject<any> = new Subject<any>();
+  
+  
   ngOnInit(): void {
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
     }
+    this.service.startConnection();
+    this.service.addDataListener();
+    this.service.onDataUpdate(this.updateDataTable.bind(this));
   }
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
-    //this.id="";
+    
   }
   ngAfterViewInit(): void {
-    
     this.loadVideogameList();
-    
+  }
+  updateDataTable() {
+    var table = $("#videogameslist").DataTable();
+    table.destroy(); 
+    this.loadVideogameList();
   }
   loadVideogameList()
   {
-    this.service.getVideogameList().subscribe((data) => {
+   this.service.getVideogameList().subscribe((data) => {
       this.videogames = data as any;
       console.log(this.videogames);
       // Calling the DT trigger to manually render the table
@@ -42,6 +52,7 @@ export class VideogamelistComponent implements OnInit, OnDestroy {
     ()=>{
       alert("Internal Server Error.There was an error retrieving your request. Please contact support");
     });
+    
   }
   editbuttonclicked(data:any)
   {
@@ -53,8 +64,7 @@ export class VideogamelistComponent implements OnInit, OnDestroy {
   {
     if (data!=undefined && data!=null) {
       this.service.deleteVideogame(data);
-      window.location.reload();
+      this.updateDataTable();
     }
   }
-
 }
