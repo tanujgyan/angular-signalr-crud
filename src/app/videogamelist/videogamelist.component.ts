@@ -1,3 +1,4 @@
+import { MsalService } from '@azure/msal-angular';
 import { VideogameModel } from './../VideogameModel';
 import { VideogameserviceService } from './../videogameservice.service';
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
@@ -13,12 +14,19 @@ import { DataTableDirective } from 'angular-datatables';
 })
 export class VideogamelistComponent implements OnInit, OnDestroy,AfterViewInit {
 
-  constructor( private service: VideogameserviceService, private router: Router,private http: HttpClient) { }
+  constructor( private service: VideogameserviceService, private router: Router,private http: HttpClient,private msalService:MsalService) { }
   dtOptions: DataTables.Settings = {};
   videogames: VideogameModel[] = [];
   dtTrigger: Subject<any> = new Subject<any>();
   
-  
+  isUserLoggedIn():boolean
+  {
+    if(this.msalService.instance.getActiveAccount()!=null)
+    {
+      return true;
+    }
+    return false;
+  }
   ngOnInit(): void {
     this.dtOptions = {
       pagingType: 'full_numbers',

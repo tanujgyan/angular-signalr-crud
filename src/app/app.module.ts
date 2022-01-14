@@ -8,7 +8,17 @@ import { AppComponent } from './app.component';
 import { VideogamelistComponent } from './videogamelist/videogamelist.component';
 import { VideogameeditComponent } from './videogameedit/videogameedit.component';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { MsalModule, MsalService, MSAL_INSTANCE } from '@azure/msal-angular';
+import { IPublicClientApplication, PublicClientApplication } from '@azure/msal-browser';
+export function MSALInstanceFactory(): IPublicClientApplication {
+  return new PublicClientApplication({
+    auth: {
+      clientId: "3bfd7c17-731e-4f0d-aec7-654655d3402b",
+      redirectUri: "http://localhost:4200",
+      postLogoutRedirectUri: "http://localhost:4200"
+    }
+  });
+}
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,9 +30,16 @@ import { ReactiveFormsModule } from '@angular/forms';
     AppRoutingModule,
     DataTablesModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MsalModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: MSAL_INSTANCE,
+      useFactory: MSALInstanceFactory
+    },
+    MsalService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -23,3 +23,8 @@
     width: 45%;
    
 }
+.login-padding
+{
+    padding-left: 60%;
+}
+.disabled{ pointer-events: none }
